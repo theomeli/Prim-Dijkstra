@@ -2,7 +2,7 @@
 Implementing Prim's and Dijkstra's algorithms
 
 ## Main implementation
-In this project, data structures of hashTable, minHeap and AVL Tree are implemented.
+In this project, data structures such as hashTable, minHeap and AVL Tree are implemented.
 
 In the project’s main functionality a text file is given as an input. This file contains connections between webpages forming edges in a graph. This graph is undirected and each edge has a weight which represents the cost of the edge. For example if webpage 1 contains a link to webpage 2 with an edge of 10, there will be a line in the input file with the content <1 2 10>. Suppose that lines are stored randomly in the input file. This file is read and it is implemented a list with the connections with the following features:
 -	The structure of this list is organized in a hashTable. To Find the neighbors of a vertex, it has to apply the hash function and next to search the vertex according to the function of hashing open addressing
