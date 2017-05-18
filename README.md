@@ -15,11 +15,11 @@ The following functions are maintained: a) finding minimal tree according to Pri
 
 ```
 READ_DATA input.txt // reading the file input.txt
-INSERT_LINK x y w // inserting an edge between vertices x and y with weight _w_
+INSERT_LINK x y w // inserting an edge between vertices x and y with weight w
 DELETE_LINK x y // deleting an edge
 MST // finding the minimal tree
-CN x y // finding the number of common neighbors of vertices _x_ and _y_
-SP x // finding the minimal paths from vertex _x_
+CN x y // finding the number of common neighbors of vertices x and y
+SP x // finding the minimal paths from vertex x
 ```
 
 
