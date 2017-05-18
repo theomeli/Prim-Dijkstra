@@ -1,0 +1,4 @@
+READ_DATA input.txt
+MST
+CN 0 1
+SP 0
