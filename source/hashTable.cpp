@@ -15,8 +15,8 @@ using namespace std;
 			D = 89909;
 			ht = new neighborsOfV[D];
 			empty = new bool[D];
-			isInSetS = new bool[D]; 			   //έχω ως default τιμή false
-            neverUsed = new bool[D];
+			isInSetS = new bool[D]; 			   //ΓΓ·ΓΉ ΓΉΓ² default Γ΄Γ©Γ¬Γ false
+            		neverUsed = new bool[D];
 			for (long i = 0; i < D; i++) {
 				empty[i] = true;
 				neverUsed[i] = true;
@@ -42,33 +42,33 @@ using namespace std;
 
 
 
-		//επιστρέφει το bucket στο οποίο βρίσκεται ο key, true αν βρεθεί και false αν όχι
-		//Αν δεν υπάρχει το στοιχείο επιστρέφεται το bucket όπου μπορεί να εισαχθεί
+		//Γ¥Γ°Γ©Γ³Γ΄Γ±ΓΓ¶Γ¥Γ© Γ΄Γ― bucket Γ³Γ΄Γ― Γ―Γ°Γ―ΓΓ― ΓΆΓ±ΓΓ³ΓªΓ¥Γ΄Γ΅Γ© Γ― key, true Γ΅Γ­ ΓΆΓ±Γ¥Γ¨Γ¥Γ ΓªΓ΅Γ© false Γ΅Γ­ ΓΌΓ·Γ©
+		//ΓΓ­ Γ¤Γ¥Γ­ ΓµΓ°ΓΓ±Γ·Γ¥Γ© Γ΄Γ― Γ³Γ΄Γ―Γ©Γ·Γ¥ΓΓ― Γ¥Γ°Γ©Γ³Γ΄Γ±ΓΓ¶Γ¥Γ΄Γ΅Γ© Γ΄Γ― bucket ΓΌΓ°Γ―Γµ Γ¬Γ°Γ―Γ±Γ¥Γ Γ­Γ΅ Γ¥Γ©Γ³Γ΅Γ·Γ¨Γ¥Γ
 		bool hashTable::searchInHash(long key, long* bucket){
 			*bucket = key%D;
 
 			do {
-				if (ht[*bucket].v == key) //το κλειδί έχει ήδη εισαχθεί
+				if (ht[*bucket].v == key) //Γ΄Γ― ΓªΓ«Γ¥Γ©Γ¤Γ ΓΓ·Γ¥Γ© ΓΓ¤Γ§ Γ¥Γ©Γ³Γ΅Γ·Γ¨Γ¥Γ
 					return true;
 
 				else{
 					*bucket += *bucket;
-					while (*bucket!=D){  //στο τελευταίο bucket του πίνακα και ελέγχει το bucket 0
+					while (*bucket!=D){  //Γ³Γ΄Γ― Γ΄Γ¥Γ«Γ¥ΓµΓ΄Γ΅ΓΓ― bucket Γ΄Γ―Γµ Γ°ΓΓ­Γ΅ΓªΓ΅ ΓªΓ΅Γ© Γ¥Γ«ΓΓ£Γ·Γ¥Γ© Γ΄Γ― bucket 0
 						*bucket = 0;
 						break;
 					}
 					break;
 				}
 			}while (!empty[*bucket] || !neverUsed[*bucket]);
-			//αν το bucket δεν είναι άδειο ή η neverUsed είναι false που σημαίνει
-			//ότι υπήρχε εισαγωγή στο συγκεκριμένο bucket η οποία διαγράφηκε
+			//Γ΅Γ­ Γ΄Γ― bucket Γ¤Γ¥Γ­ Γ¥ΓΓ­Γ΅Γ© ΓΓ¤Γ¥Γ©Γ― Γ Γ§ neverUsed Γ¥ΓΓ­Γ΅Γ© false Γ°Γ―Γµ Γ³Γ§Γ¬Γ΅ΓΓ­Γ¥Γ©
+			//ΓΌΓ΄Γ© ΓµΓ°ΓΓ±Γ·Γ¥ Γ¥Γ©Γ³Γ΅Γ£ΓΉΓ£Γ Γ³Γ΄Γ― Γ³ΓµΓ£ΓªΓ¥ΓªΓ±Γ©Γ¬ΓΓ­Γ― bucket Γ§ Γ―Γ°Γ―ΓΓ΅ Γ¤Γ©Γ΅Γ£Γ±ΓΓ¶Γ§ΓªΓ¥
 
-			return false; //Δεν υπάρχει το στοιχείο με κλειδί key και επιστρέφεται το bucket
-						  //όπου μπορεί να εισαχθεί
+			return false; //Γ„Γ¥Γ­ ΓµΓ°ΓΓ±Γ·Γ¥Γ© Γ΄Γ― Γ³Γ΄Γ―Γ©Γ·Γ¥ΓΓ― Γ¬Γ¥ ΓªΓ«Γ¥Γ©Γ¤Γ key ΓªΓ΅Γ© Γ¥Γ°Γ©Γ³Γ΄Γ±ΓΓ¶Γ¥Γ΄Γ΅Γ© Γ΄Γ― bucket
+						  //ΓΌΓ°Γ―Γµ Γ¬Γ°Γ―Γ±Γ¥Γ Γ­Γ΅ Γ¥Γ©Γ³Γ΅Γ·Γ¨Γ¥Γ
 		}
 
 
-		//επιστρέφει τους γείτονες που περιέχονται στο κόμβο v
+		//Γ¥Γ°Γ©Γ³Γ΄Γ±ΓΓ¶Γ¥Γ© Γ΄Γ―ΓµΓ² Γ£Γ¥ΓΓ΄Γ―Γ­Γ¥Γ² Γ°Γ―Γµ Γ°Γ¥Γ±Γ©ΓΓ·Γ―Γ­Γ΄Γ΅Γ© Γ³Γ΄Γ― ΓªΓΌΓ¬ΓΆΓ― v
 		avlTree hashTable::getNeighbors(long v){
 			long *bucket = new long;
 			if (searchInHash(v, bucket))
@@ -82,21 +82,21 @@ using namespace std;
 			long bucket = key%D;
 			bool b = searchInHash(key, &bucket);
 
-			//αν δε βρέθηκε το key το εισάγω στον πίνακα
+			//Γ΅Γ­ Γ¤Γ¥ ΓΆΓ±ΓΓ¨Γ§ΓªΓ¥ Γ΄Γ― key Γ΄Γ― Γ¥Γ©Γ³ΓΓ£ΓΉ Γ³Γ΄Γ―Γ­ Γ°ΓΓ­Γ΅ΓªΓ΅
 			if (!b) {
 				 ht[bucket].v = key;
 				 empty[bucket] = false;
 				 neverUsed[bucket] = false;
 			}
 
-			//προσθέτω το στοιχείο με κλειδί neighborsKey στους γείτονες του key
+			//Γ°Γ±Γ―Γ³Γ¨ΓΓ΄ΓΉ Γ΄Γ― Γ³Γ΄Γ―Γ©Γ·Γ¥ΓΓ― Γ¬Γ¥ ΓªΓ«Γ¥Γ©Γ¤Γ neighborsKey Γ³Γ΄Γ―ΓµΓ² Γ£Γ¥ΓΓ΄Γ―Γ­Γ¥Γ² Γ΄Γ―Γµ key
 			ht[bucket].neighbors.insertToAvl(neighborsKey, weight);
 			vectorsInS++;
 
 		}
 
 
-		//Διαγραφή της ακμής (treeId, nodeId)
+		//Γ„Γ©Γ΅Γ£Γ±Γ΅Γ¶Γ Γ΄Γ§Γ² Γ΅ΓªΓ¬ΓΓ² (treeId, nodeId)
 		void hashTable::deleteAnEdge(long treeId, long nodeId){
 			long bucket;
 			bool b = searchInHash(treeId, &bucket);
@@ -148,7 +148,7 @@ using namespace std;
 
 
 		//////////////////////////////////////
-		//////////////////////////////////////Άνοιγμα Αρχείου Για Διάβασμα
+		//////////////////////////////////////ΒΆΓ­Γ―Γ©Γ£Γ¬Γ΅ ΓΓ±Γ·Γ¥ΓΓ―Γµ ΓƒΓ©Γ΅ Γ„Γ©ΓΓΆΓ΅Γ³Γ¬Γ΅
 		/////////////////////////////////////
 		void hashTable::openfile(){
 			string k;
@@ -159,7 +159,7 @@ using namespace std;
 
 			getline(commFile, k, ' ');
 
-			//////Εισαγωγή δεδομένων από το inputFile
+			//////Γ…Γ©Γ³Γ΅Γ£ΓΉΓ£Γ Γ¤Γ¥Γ¤Γ―Γ¬ΓΓ­ΓΉΓ­ Γ΅Γ°ΓΌ Γ΄Γ― inputFile
 			if(k == "READ_DATA") {
 				ifstream inputFile;
 				getline(commFile, k, '\n');
@@ -172,20 +172,20 @@ using namespace std;
 				}
 			}
 
-            //Διαβάζει το χαρακτήρα \n
+            //Γ„Γ©Γ΅ΓΆΓΓ¦Γ¥Γ© Γ΄Γ― Γ·Γ΅Γ±Γ΅ΓªΓ΄ΓΓ±Γ΅ \n
 			char c;
 
 			getline(commFile, k, ' ');
 
 			while(!commFile.eof()){
-				//αν έχουμε insert_link
+				//Γ΅Γ­ ΓΓ·Γ―ΓµΓ¬Γ¥ insert_link
 				if (k == "INSERT_LINK"){
 					commFile >> from >> to;
 					insertToHash(from, to, weight);
 					insertToHash(to, from, weight);
 					cout << "b";
 				}
-				//αν έχουμε delete_link
+				//Γ΅Γ­ ΓΓ·Γ―ΓµΓ¬Γ¥ delete_link
 				else if (k == "DELETE_LINK"){
 					commFile >> from >> to;
 					deleteAnEdge(from, to);
@@ -210,7 +210,7 @@ using namespace std;
 					d->dijkstra_algorithm(from);
 					cout << "f";
 				}
-				//Διαβάζει το χαρακτήρα \n
+				//Γ„Γ©Γ΅ΓΆΓΓ¦Γ¥Γ© Γ΄Γ― Γ·Γ΅Γ±Γ΅ΓªΓ΄ΓΓ±Γ΅ \n
 				commFile.get(c);
 
 				getline(commFile, k, ' ');
