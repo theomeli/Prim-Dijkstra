@@ -11,7 +11,7 @@ In the project’s main functionality a text file is given as an input. This fil
 -	HashTable has a constant size and contains less than 50000 vertices
 -	Insertion and deletion of a link are also implemented
 
-The following functions are maintained: a) finding the minimum spanning tree according to Prim’s algorithm (command MST), b) finding the number of common neighbors of two vertices (command CN) and c) finding the minimal path with the Dijkstra’s algorithm (command SP). Functions are read from file commands.txt, where there will be the following commands:
+The following functions are maintained: a) finding the minimum spanning tree according to Prim’s algorithm (command MST), b) finding the number of common neighbors of two vertices (command CN) and c) finding the shortest paths with the Dijkstra’s algorithm (command SP). Functions are read from file commands.txt, where there will be the following commands:
 
 ```
 READ_DATA input.txt // reading the file input.txt
@@ -19,9 +19,9 @@ INSERT_LINK x y w // inserting an edge between vertices x and y with weight w
 DELETE_LINK x y // deleting an edge
 MST // finding the minimum spanning tree
 CN x y // finding the number of common neighbors of vertices x and y
-SP x // finding the minimal paths from vertex x
+SP x // finding the shortest path from vertex x
 ```
 
 
-Only commands MST, CN and SP can print in file output.txt. Every time we meet a command MST in the file input.txt, we write the cost of minimum spanning tree in the output.txt and the runtime of finding the tree (i.e. in seconds) as well. Every time we meet the command CN we print the number of common neighbors. Finally, when we meet the command SP we print the cost of minimal path from vertex x to all other vertices. Commands in commands.txt file may be in a random order and there is no limit about their number. The only limitation is that the first command of commands.txt is READ_DATA.
+Only commands MST, CN and SP can print in file output.txt. Every time we meet a command MST in the file input.txt, we write the cost of minimum spanning tree in the output.txt and the runtime of finding the tree (i.e. in seconds) as well. Every time we meet the command CN we print the number of common neighbors. Finally, when we meet the command SP we print the cost of shortest path from vertex x to all other vertices. Commands in commands.txt file may be in a random order and there is no limit about their number. The only limitation is that the first command of commands.txt is READ_DATA.
 
