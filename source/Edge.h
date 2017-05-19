@@ -5,7 +5,8 @@
 //---------------------------------------------------------------------------
 class edge{
 	private:
-		long treeId, nodeId; 		//Το ID του κόμβου του δέντρου και του γείτονά του
+		//the id of the node of the tree and its neighbor's
+		long treeId, nodeId;
 		short weight;
 
 
