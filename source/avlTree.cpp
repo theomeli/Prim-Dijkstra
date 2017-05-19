@@ -29,7 +29,7 @@
 		}
 
 
-		//Δημιουργία κόμβου
+		//creation of a node
 		avlNode* avlTree::newnode(long aTreeId, long num, short aWeight){
 			avlNode *neos = new avlNode(aTreeId, num, aWeight);
 			neos->left = NULL;
@@ -40,20 +40,20 @@
 
 
 		//////////////////////////////////////
-		//////////////////////////////////////Περιστροφή Κόμβων
+		//////////////////////////////////////rotation of nodes
 		/////////////////////////////////////
 		void avlTree::rotate(avlNode *cur){
 			avlNode *ptr = new avlNode(treeId, cur->getNodeId(), cur->getWeight());
 			avlNode *child;
 			avlNode *gchild;
 
-			//Ορίζονται οι κόμβοι που μας ενδιαφέρουν
+			//we define the nodes we are interested in
 			if (cur->bf == 2) child = cur->right;
 			else child = cur->left;
 			if (child->bf == 1) gchild = child->right;
 			else gchild = child->left;
 
-			//Περίπτωση δεξιά-δεξιά
+			//the case of a right-right rotation
 			if(cur->bf == 2 && child->bf == 1){
 				cur->bf = 0;
 				child->bf = 0;
@@ -67,7 +67,7 @@
 				child->left = ptr->left;
 			}
 
-			//Περίπτωση αριστερά-αριστερά
+			//the case of a left-left rotation
 			if(cur->bf == -2 && child->bf == -1){
 				cur->bf = 0;
 				child->bf = 0;
@@ -81,7 +81,7 @@
 				cur->right = ptr->left;
 			}
 
-			//Περίπτωση δεξιά-αριστερά
+			//the case of a right-left rotation
 			if(cur->bf == 2 && child->bf == -1){
 				cur->bf = 0;
 				if(gchild->bf == 1) {
@@ -107,7 +107,7 @@
 				gchild->left = ptr->left;
 			}
 
-			//Περίπτωση αριστερά-δεξιά
+			//the case of a left-right rotation
 			if(cur->bf == -2 && child->bf == 1){
 				cur->bf = 0;
 				if(gchild->bf == 1) {
@@ -136,30 +136,29 @@
 
 
 		//////////////////////////////////////
-		//////////////////////////////////////Ανανέωση στάθμισης από εισαγωγή
+		//////////////////////////////////////refreshing the balancing after an insertion
 		/////////////////////////////////////
 		bool avlTree::insBalance(long num, avlNode *cur){
-			//Aν φτάσαμε στον κόμβο επιστρέφουμε
+			//if we reach the node, we return
 			if (num == cur->getNodeId()) return true;
 			bool k;
-			//Aν δε βρισκόμαστε στον κόμβο προχωράμε κατάλληλα
+			//if we don't reach the node, we continue
 			if (num > cur->getNodeId()) k = insBalance(num, cur->right);
 			else k = insBalance(num, cur->left);
 
-			//Aν ο κόμβος από τον οποίο επιστρέψαμε δεν άλλαξε τιμή επιστρέφουμε
+			//if the value of the node that we left didn't change value, we return
 			if (!k){
 				return false;
 			}
-			//Διαφορετικά
 			else{
-				//Αν ήρθαμε από δεξιά αυξάνουμε την στάθμιση αλλιώς την μειώνουμε
+				//if we came from the right, we increase the balancing, else we decrease it
 				if (num > cur->getNodeId()) cur->bf++;
 				else cur->bf--;
-				//Αν έγινε 0 οι κόμβοι πιο πάνω δεν αλλάζουν
+				//if it is 0, the nodes above don't change
 				if (cur->bf == -1 || cur->bf == 1){
 					return true;
 				}
-				//Διαφορετικά αν έγινε 2 ή -2 χρειάζεται περιστροφή
+				//Differenly if it is 2 or -2, it needs rotation
 				else{
 					if (cur->bf == -2 || cur->bf == 2) rotate(cur);
 					return false;
@@ -169,51 +168,46 @@
 
 
 		//////////////////////////////////////
-		//////////////////////////////////////Εισαγωγή Κόμβου
+		//////////////////////////////////////insertion of a node
 		/////////////////////////////////////
 		void avlTree::insertToAvl(long num, short weight){
-			//Ορίζουμε μεταβλητές για το υπαρχον δέντρο της σελίδας of και το νέο κόμβο με ID num
+			//we define variables for the existing tree and the new node with id num
 			avlNode *currentTree, *ptr;
-			//Ανάθεση του τρέχοντος δέντρου στην currentTree
 			currentTree = root;
-			//Δημιουργία του νέου κόμβου
+			//creation of the new node
 			ptr = newnode(treeId, num, weight);
 
-			//Αν δεν έχουμε δεδομένα στο δέντρο, ο νέος κόμβος ορίζεται ως ρίζα
+			//if there is no data in the tree, the new node is defined as a root
 			if (root == NULL){
 				root = ptr;
 				return;
 			}
 
-			//Αλλιώς
 			while(1){
-				//Αν βρισκόμαστε στον ζητούμενο σημαίνει ότι υπάρχει ήδη, άρα δεν αλλάζουμε τίποτα
+				//if we are in this node, we don't change anything
 				if(currentTree->getNodeId() == num) return;
-				//Διαφορετικά κινούμαστε δεξιά ή αριστερά κατάλληλα
+				//else we move right of left appropriately
 				if(currentTree->getNodeId() < num){
-					//Αν βρεθούμε σε "τέρμα"
+					//if we reach the terminal
 					if(currentTree->right == NULL){
-						//Προσθέτουμε τον κόμβο
+						//we add a node
 						currentTree->right = ptr;
-						//Και αλλάζουμε όλες τις σταθμίσεις από την ρίζα μέχρι τον κόμβο αυτό κατάλληλα
+						//we change all the balancings from the root to this node
 						insBalance(num, currentTree);
 						return;
 					}
-					//Διαφορετικά προχωράμε
+					//else we move on
 					else{
 						currentTree = currentTree->right;
 					}
 				}
 				else{
-					//Aντίστοιχα αν βρεθούμε σε "τέρμα"
+					//we act the same as the above if part
 					if(currentTree->left == NULL){
-						//Προσθέτουμε τον κόμβο
 						currentTree->left = ptr;
-						//Και αλλάζουμε όλες τις σταθμίσεις από την ρίζα μέχρι τον κόμβο αυτό κατάλληλα
 						insBalance(num, currentTree);
 						return;
 					}
-					//Διαφορετικά προχωράμε
 					else currentTree = currentTree->left;
 				}
 			}
@@ -221,28 +215,27 @@
 
 
 		//////////////////////////////////////
-		//////////////////////////////////////Ανανέωση στάθμισης από διαγραφή
+		//////////////////////////////////////refreshing balancing after a deletion
 		/////////////////////////////////////
 		bool avlTree::delBalance(int num, avlNode *cur){
-			//αν φτάσαμε στον κόμβο επιστρέφουμε
+			//if we reach the node, we return 
 			if (num == cur->getNodeId()) return true;
 			bool k;
-			//αν δεν βρισκόμαστε στον κόμβο προχωράμε κατάλληλα
+			//if we don't reach the node, we continue
 			if (num > cur->getNodeId()) k = delBalance(num, cur->right); else k = delBalance(num, cur->left);
 
-			//αν ο κόμβος από τον οποίο επιστρέψαμε δεν άλλαξε τιμή επιστρέφουμε
+			//if the value of the node that we left didn't change value, we return
 			if (!k){
 				return false;
 			}
-			//αλλιώς
 			else{
-				//αν ήρθαμε από δεξιά μειώνουμε την στάθμιση αλλιώς την αυξάνουμε
+				//if we came from the right, we decrease the balancing, else we increase it
 				if (num>cur->getNodeId()) cur->bf--; else cur->bf++;
-				//αν έγινε +1 ή -1 οι κόμβοι πιο πάνω δεν αλλάζουν
+				//if it became +1 or -1, the nodes above don't change
 				if (cur->bf==1 || cur->bf==-1){
 					return false;
 				}
-				//αλλιώς αν έγινε 2 ή -2 χρειάζεται περιστροφή
+				//if it became 2 or -2, it needs rotation
 				else{
 					if (cur->bf==-2 || cur->bf==2) rotate(cur);
 					return true;
@@ -252,39 +245,38 @@
 
 
 		//////////////////////////////////////
-		//////////////////////////////////////Διαγραφή κόμβου
+		//////////////////////////////////////deletion of a node
 		/////////////////////////////////////
 		void avlTree::remove(long num){
 
-			//Αν δεν έχουμε δεδομένα στο δέντρο, επιστρέφουμε
+			//if we don't have data in the tree, we return 
 			if (root == NULL){
 				return;
 			}
 
-			//Ορίζουμε τον τρέχοντα κόμβο
+			//we define the current node
 			avlNode *current;
 
-			//Ο τρέχων κόμβος ξεκινάει από την ρίζα
+			//the current node begins from the root
 			current = root;
 
 			while(1){
-				//Αν βρισκόμαστε στον ζητούμενο τον ανταλλάσουμε με τον δεξιότερο κόμβο από
-				//το αριστερό υποδέντρο ή με τον αριστερότερο κόμβο από το δεξί υποδέντρο ως εξής:
+				//if we are at the node we want, we exchange it with the most right 
+				//one of the left or with the most left one of the right subtree 
 				if(current->getNodeId() == num){
-					//τον κρατάμε σε έναν προσωρινό κόμβο
+					//we keep the node in a current one
 					avlNode *ptr;
 					ptr = current;
 
-					//ζητάμε τον γονέα του ακριανού κόμβου
+					//we search for the parent of the extreme node
 					avlNode *edge;
 					if(current->left != NULL || current->right != NULL){
 						bool f = false;
-						//αν έχει αριστερό τέκνο
+						//if it has a left child
 						if(current->left != NULL){
 							edge = current;
 							current = current->left;
-							//βρίσκουμε το μεγαλύτερο από τα αριστερά
-							//με δeίκτη αν προχωρήσαμε δεξιά
+							//we find the biggest one from the left
 							while(current->right != NULL) {
 								edge = current;
 								current = current->right;
@@ -293,7 +285,7 @@
 							ptr->getNodeId() = current->getNodeId();
 						}
 						else{
-							//αλλιώς βρίσκουμε το μικρότερο από δεξιά
+							//else we find the smallest one from the right
 							edge = current;
 							current = current->right;
 							while(current->left != NULL)
@@ -314,30 +306,27 @@
 						if (edge->bf == -2 || edge->bf == 2) rotate(edge);
 					}
 					else{
-						//ανανεώνουμε τις σταθμίσεις
+						//refreshing the balancing
 						delBalance(edge->getNodeId(), root);
 						return;
 					}
 				}
-				//σε άλλη περίπτωση κινούμαστε δεξιά ή αριστερά κατάλληλα
+				//in any other case we move right or left
 				if(current->getNodeId() < num){
-					//και αν βρεθούμε σε "τέρμα"
+					//if we reach the terminal, we return
 					if(current->right == NULL){
-						//επιστρέφουμε
 						return;
 					}
-					//αλλιώς προχωράμε
+					//else we move on
 					else{
 						current = current->right;
 					}
 				}
 				else{
-					//αντίστοιχα αν βρεθούμε σε "τέρμα"
+					//we act the same as the above if part
 					if(current->left == NULL){
-						//επιστρέφουμε
 						return;
 					}
-					//αλλιώς προχωράμε
 					else{
 						current = current->left;
 					}
@@ -347,11 +336,11 @@
 
 
 		//////////////////////////////////////
-		//////////////////////////////////////Εμφάνιση Αποτελεσμάτων
+		//////////////////////////////////////Displaying the results
 		/////////////////////////////////////
 		void avlTree::inorder(avlNode *cur, minHeap *adjacentToAdd){
 			if (!(cur->left == NULL)) inorder(cur->left, adjacentToAdd);
-			//Δημιουργώ αντικείμενα τύπου edge και τα προσθέτω στο σωρό
+			//we create objects of type edge and we add them to the heap
 			edge e = createEdge(*cur);
 			adjacentToAdd->insertToHeap(e);
 //			outpFile  << ", " << cur->id;
