@@ -11,7 +11,7 @@ class avlTree{
 
 		avlNode* root;
 
-		//το ID του κόμβου
+		//node's id
 		long treeId;
 
 
@@ -32,26 +32,25 @@ class avlTree{
 		edge createEdge(avlNode anAdjacent);
 
 
-		//Δημιουργία κόμβου
+		//creation of a new node
 		avlNode *newnode(long aTreeId, long num, short aWeight);
 
-		//Περιστροφή Κόμβων
+		//node rotation
 		void rotate(avlNode *cur);
 
-
-		//Ανανέωση στάθμισης από εισαγωγή
+		//refreshes the balancing after an insertion
 		bool insBalance(long num, avlNode *cur);
 
-		//Εισαγωγή Κόμβου
+		//insertion of a node
 		void insertToAvl(long num, short weight);
 
-		//Ανανέωση στάθμισης από διαγραφή
+		//refreshes balancing after deletion
 		bool delBalance(int num, avlNode *cur);
 
-		//Διαγραφή κόμβου
+		//deletion of a node
 		void remove(long num);
 
-		//Εμφάνιση Αποτελεσμάτων
+		//desplays the results
 		void inorder(avlNode *cur, minHeap *adjacentToAdd);
 
 		long* inorderToArray(avlNode *cur);
