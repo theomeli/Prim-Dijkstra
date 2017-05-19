@@ -16,13 +16,13 @@
 class dijkstra{
 
 	private:
-		hashTable* graph;    					//Ο hashTable πίνακας με το γράφο
-		minHeap adjacentToS; 					//Το σύνολο των κορυφών που πάυει να έχει d άπειρο
+		hashTable* graph;    				//the hashtable with the graph
+		minHeap adjacentToS; 				//the set of vertices that haven't d as infinite anymore
 		static const long infinite = 2147483647;
 		static const long numOfV = 44953;
-		long* q;       							//Ο πίνακας με τις κορυφές που έχουν εισαχθεί
-		long* d; 								//Ο πίνακας D με τις εκάστοτε βέλτιστες αποστάσεις της κάθε κορυφής
-		long* p; 								//Ο πίνακας P με την εκάστοτε προηγούμενη κορυφή
+		long* q;       					//the array with the vertices that have already inserted
+		long* d; 					//the array with the current shortest distances of each vertex
+		long* p; 					//the array with the current previous vertex
 
 
 	public:
