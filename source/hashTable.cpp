@@ -15,7 +15,7 @@ using namespace std;
 			D = 89909;
 			ht = new neighborsOfV[D];
 			empty = new bool[D];
-			isInSetS = new bool[D]; 			   //Ý÷ù ùò default ôéìÞ false
+			isInSetS = new bool[D]; 		//set as a default value false
             		neverUsed = new bool[D];
 			for (long i = 0; i < D; i++) {
 				empty[i] = true;
@@ -42,33 +42,33 @@ using namespace std;
 
 
 
-		//åðéóôñÝöåé ôï bucket óôï ïðïßï âñßóêåôáé ï key, true áí âñåèåß êáé false áí ü÷é
-		//Áí äåí õðÜñ÷åé ôï óôïé÷åßï åðéóôñÝöåôáé ôï bucket üðïõ ìðïñåß íá åéóá÷èåß
+		//it returns the bucket in which there is the key, true if it is found and false if it is not
+		//if there is no element, it returns the bucket that it can be inserted
 		bool hashTable::searchInHash(long key, long* bucket){
 			*bucket = key%D;
 
 			do {
-				if (ht[*bucket].v == key) //ôï êëåéäß Ý÷åé Þäç åéóá÷èåß
+				if (ht[*bucket].v == key) 		//the key has already been inserted
 					return true;
 
 				else{
 					*bucket += *bucket;
-					while (*bucket!=D){  //óôï ôåëåõôáßï bucket ôïõ ðßíáêá êáé åëÝã÷åé ôï bucket 0
+					while (*bucket!=D){  		//in the last array's bucket and it controls bucket 0
 						*bucket = 0;
 						break;
 					}
 					break;
 				}
 			}while (!empty[*bucket] || !neverUsed[*bucket]);
-			//áí ôï bucket äåí åßíáé Üäåéï Þ ç neverUsed åßíáé false ðïõ óçìáßíåé
-			//üôé õðÞñ÷å åéóáãùãÞ óôï óõãêåêñéìÝíï bucket ç ïðïßá äéáãñÜöçêå
+			//if bucket is not empty or neverUsed is false, which means that
+			//there was insertion in the particular bucket that has been deleted
 
-			return false; //Äåí õðÜñ÷åé ôï óôïé÷åßï ìå êëåéäß key êáé åðéóôñÝöåôáé ôï bucket
-						  //üðïõ ìðïñåß íá åéóá÷èåß
+			return false; 				//there is not the element key the value of key variable and 
+								//it is returned the bucket where it can be inserted
 		}
 
 
-		//åðéóôñÝöåé ôïõò ãåßôïíåò ðïõ ðåñéÝ÷ïíôáé óôï êüìâï v
+		//it returns the neighbors which are in node v
 		avlTree hashTable::getNeighbors(long v){
 			long *bucket = new long;
 			if (searchInHash(v, bucket))
@@ -82,21 +82,21 @@ using namespace std;
 			long bucket = key%D;
 			bool b = searchInHash(key, &bucket);
 
-			//áí äå âñÝèçêå ôï key ôï åéóÜãù óôïí ðßíáêá
+			//if the key wasn't found, we insert it in the array
 			if (!b) {
 				 ht[bucket].v = key;
 				 empty[bucket] = false;
 				 neverUsed[bucket] = false;
 			}
 
-			//ðñïóèÝôù ôï óôïé÷åßï ìå êëåéäß neighborsKey óôïõò ãåßôïíåò ôïõ key
+			//we add the element with key neighborsKey at the neighbors of key
 			ht[bucket].neighbors.insertToAvl(neighborsKey, weight);
 			vectorsInS++;
 
 		}
 
 
-		//ÄéáãñáöÞ ôçò áêìÞò (treeId, nodeId)
+		//Deletion of the edge (treeId, nodeId)
 		void hashTable::deleteAnEdge(long treeId, long nodeId){
 			long bucket;
 			bool b = searchInHash(treeId, &bucket);
@@ -148,7 +148,7 @@ using namespace std;
 
 
 		//////////////////////////////////////
-		//////////////////////////////////////¢íïéãìá Áñ÷åßïõ Ãéá ÄéÜâáóìá
+		//////////////////////////////////////opens a file for reading
 		/////////////////////////////////////
 		void hashTable::openfile(){
 			string k;
@@ -159,7 +159,7 @@ using namespace std;
 
 			getline(commFile, k, ' ');
 
-			//////ÅéóáãùãÞ äåäïìÝíùí áðü ôï inputFile
+			//////inserting data from inputFile
 			if(k == "READ_DATA") {
 				ifstream inputFile;
 				getline(commFile, k, '\n');
@@ -172,20 +172,18 @@ using namespace std;
 				}
 			}
 
-            //ÄéáâÜæåé ôï ÷áñáêôÞñá \n
+            		//it reads the character \n
 			char c;
 
 			getline(commFile, k, ' ');
 
 			while(!commFile.eof()){
-				//áí Ý÷ïõìå insert_link
 				if (k == "INSERT_LINK"){
 					commFile >> from >> to;
 					insertToHash(from, to, weight);
 					insertToHash(to, from, weight);
 					cout << "b";
 				}
-				//áí Ý÷ïõìå delete_link
 				else if (k == "DELETE_LINK"){
 					commFile >> from >> to;
 					deleteAnEdge(from, to);
@@ -210,7 +208,7 @@ using namespace std;
 					d->dijkstra_algorithm(from);
 					cout << "f";
 				}
-				//ÄéáâÜæåé ôï ÷áñáêôÞñá \n
+				//it reads the character \n
 				commFile.get(c);
 
 				getline(commFile, k, ' ');
