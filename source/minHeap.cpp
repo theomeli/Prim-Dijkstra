@@ -2,7 +2,7 @@
 #include <string.h>
 //---------------------------------------------------------------------------
 minHeap::minHeap(){
-	maxSize = 88303;   			//μέγιστο μέγεθος του σωρού όσο το πλήθος των ακμών
+	maxSize = 88303;   			//the maximum size of the heap which equals the number of edges
 	currentSize = 0;
 	heap = new edge[maxSize];
 }
@@ -43,34 +43,33 @@ minHeap minHeap::deleteMin(edge& minEdge){
 	if (currentSize == 0)
 		return *this;
 
-	//η μικρότερη ακμή αποθηκεύεται και επιστρέφεται
+	//the minimal edge is stored and is returned
 	minEdge = heap[1];
 
-	//αποθηκεύω το τελευταίο στοιχείο του σωρού και ελλαττώνν το currentSize κατά ένα
+	//the last element of the heap is stored and currentSize is decreased by one
 	edge lastEdge = heap[currentSize--];
 
-	//αναζητούμε πού θα εισαχθεί το τελευταίο στοιχείο του σωρού
-	//ξεκινώντας από τη ρίζα
-
+	//we search where will be inserted the last element of the heap
+	//begining from the root
 	long i = 1;
 	long ci = 2;
 	short weight = lastEdge.getWeight();
 	while (ci <= currentSize){
-		//επιλέγω το μικρότερο από τα δύο παιδιά
+		//we choose the smallest of the two children
 		if (heap[ci].getWeight() > heap[ci+1].getWeight())
 			ci++;
 
-			//ελέγχω αν το μικρότερο από τα δύο παιδιά είναι μικρότερο της lastEdge
-			if (heap[ci].getWeight() >= weight)  break;      //είναι μικρότερο
+			//we check if the smallest of the two children is smaller than lastEdge
+			if (heap[ci].getWeight() >= weight)  break;      //it is smaller
 			else{
-				heap[i] = heap[ci];  //το μικρότερο παιδί γίνεται γονιός
-				i = ci;              //και κατεβαίνουμε ένα επίπεδο στο δέντρο
+				heap[i] = heap[ci];  //the smallest child becomes parent
+				i = ci;             
 				ci *= 2;
 			}
 
 
 	}
-	//έχουμε βρει το σημείο που θα μπει ο lastEdge
+	//we have found the point that lastEdge will enter
 	heap[i] = lastEdge;
 
 	return *this;
