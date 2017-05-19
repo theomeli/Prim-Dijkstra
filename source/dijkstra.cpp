@@ -10,11 +10,11 @@
 			d = new long[numOfV];
 			p = new long[numOfV];
 			for (int i = 0; i < 44953; i++) {
-				d[i] = infinite;  				//θέτω το d ίσο με το άπειρο
-				p[i] = -1;        				//και προηγούμενη κορυφή μια υποθέτική -1
+				d[i] = infinite;  				//set d equal to infinite
+				p[i] = -1;        				//set the last vertex an hypothetcal one as -1
 			}
 
-			//Αρχικοποιώ το σωρό
+			//initialize the heap
 			adjacentToS = minHeap();
 		}
 
@@ -31,7 +31,7 @@
 
 
 		void dijkstra::dijkstra_algorithm(long x){
-			//Έστω ότι ξεκινάω από την κορυφή x
+			//assume that we start from vertex x
 			avlTree neighb;
 			d[x] = 0;
 			neighb = graph->getNeighbors(x);
@@ -61,10 +61,10 @@
 
 		void dijkstra::inorder(avlNode *cur){
 			if (!(cur->left == NULL)) inorder(cur->left);
-			//Δημιουργώ το δέντρο που περιέχει τον εκάστοτε κόμβο cur
+			//we create the tree which contains the node cur
 			long treeId = cur->getTreeId();
 			avlTree tree = graph->getNeighbors(treeId);
-			//Δημιουργώ αντικείμενα τύπου edge και ανανεώνω τα κόστη //και τα προσθέτω στο σωρό
+			//we create objects of type edge, we refresh the costs and we add them in the heap
 			edge e = tree.createEdge(*cur);
 			update_cost(e);
 
