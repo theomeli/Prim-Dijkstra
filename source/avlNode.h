@@ -5,11 +5,11 @@
 //---------------------------------------------------------------------------
 class avlNode: public edge{
 	public:
-		//Αριστερό τέκνο
+		//left child
 		avlNode *left;
-		//Δεξί τέκνο
+		//right child
 		avlNode *right;
-		//Στάθμιση
+		//balancing
 		int bf;
 
 		avlNode();
